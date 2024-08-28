@@ -3,6 +3,7 @@ package geodistance
 import (
 	"fmt"
 	"github.com/paulmach/orb"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -13,6 +14,10 @@ const (
 	MethodHaversine     = "haversine"
 	MethodGeographicLib = "geographiclib"
 )
+
+func Deg2Rad(deg float64) float64 {
+	return deg * math.Pi / 180.0
+}
 
 type Point struct {
 	Latitude  float64
