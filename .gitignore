@@ -28,3 +28,4 @@ go.work.sum
 .idea/
 
 cmd/geodistance/geodistance
+cmd/geodistancecmp/geodistancecmp
