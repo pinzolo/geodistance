@@ -13,6 +13,10 @@ func NewFlatCalculator(logger *slog.Logger) DistanceCalculator {
 	return &flatCalculator{logger: logger}
 }
 
+func (c *flatCalculator) Method() string {
+	return MethodFlat
+}
+
 func (c *flatCalculator) Calculate(p1 Point, p2 Point) float64 {
 	c.logger.Debug("Method: flat", slog.String("point1", p1.String()), slog.String("point2", p2.String()))
 	return geo.Distance(p1.Orb(), p2.Orb())

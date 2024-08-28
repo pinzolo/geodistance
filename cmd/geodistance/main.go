@@ -7,8 +7,6 @@ import (
 	"github.com/pinzolo/geodistance"
 	"log/slog"
 	"os"
-	"strconv"
-	"strings"
 )
 
 const (
@@ -35,11 +33,11 @@ func main() {
 	if len(args) < 2 {
 		handleError(errors.New("need two points"))
 	}
-	p1, err := parsePoint(args[0])
+	p1, err := geodistance.ParsePoint(args[0])
 	if err != nil {
 		handleError(err)
 	}
-	p2, err := parsePoint(args[1])
+	p2, err := geodistance.ParsePoint(args[1])
 	if err != nil {
 		handleError(err)
 	}
@@ -73,20 +71,4 @@ func newLogger() *slog.Logger {
 func handleError(err error) {
 	fmt.Fprintln(os.Stderr, err)
 	os.Exit(1)
-}
-
-func parsePoint(s string) (geodistance.Point, error) {
-	split := strings.Split(s, ",")
-	if len(split) != 2 {
-		return geodistance.Point{}, fmt.Errorf("invalid point: %s", s)
-	}
-	lat, err := strconv.ParseFloat(split[0], 64)
-	if err != nil {
-		return geodistance.Point{}, err
-	}
-	lng, err := strconv.ParseFloat(split[1], 64)
-	if err != nil {
-		return geodistance.Point{}, err
-	}
-	return geodistance.NewPoint(lat, lng)
 }

@@ -3,16 +3,16 @@ package geodistance
 import (
 	"fmt"
 	"github.com/paulmach/orb"
-	"math"
+	"strconv"
+	"strings"
 )
 
 const (
-	R = 6378137.0
+	R                   = 6378137.0
+	MethodFlat          = "flat"
+	MethodHaversine     = "haversine"
+	MethodGeographicLib = "geographiclib"
 )
-
-func Deg2Rad(deg float64) float64 {
-	return deg * math.Pi / 180.0
-}
 
 type Point struct {
 	Latitude  float64
@@ -39,5 +39,22 @@ func NewPoint(lat, lng float64) (Point, error) {
 }
 
 type DistanceCalculator interface {
+	Method() string
 	Calculate(p1 Point, p2 Point) float64
+}
+
+func ParsePoint(s string) (Point, error) {
+	split := strings.Split(s, ",")
+	if len(split) != 2 {
+		return Point{}, fmt.Errorf("invalid point: %s", s)
+	}
+	lat, err := strconv.ParseFloat(split[0], 64)
+	if err != nil {
+		return Point{}, err
+	}
+	lng, err := strconv.ParseFloat(split[1], 64)
+	if err != nil {
+		return Point{}, err
+	}
+	return NewPoint(lat, lng)
 }
