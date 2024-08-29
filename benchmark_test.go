@@ -13,13 +13,13 @@ func BenchmarkFlatCalculator(b *testing.B) {
 	c := geodistance.NewFlatCalculator(logger)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		p1 := geodistance.Point{
-			Longitude: getRandomLongitude(),
-			Latitude:  getRandomLatitude(),
+		p1, err := geodistance.NewPoint(getRandomLatitude(), getRandomLongitude())
+		if err != nil {
+			b.Fatal(err)
 		}
-		p2 := geodistance.Point{
-			Longitude: getRandomLongitude(),
-			Latitude:  getRandomLatitude(),
+		p2, err := geodistance.NewPoint(getRandomLatitude(), getRandomLongitude())
+		if err != nil {
+			b.Fatal(err)
 		}
 		c.Calculate(p1, p2)
 	}
@@ -30,13 +30,13 @@ func BenchmarkHaversineCalculator(b *testing.B) {
 	c := geodistance.NewHaversineCalculator(logger)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		p1 := geodistance.Point{
-			Longitude: getRandomLongitude(),
-			Latitude:  getRandomLatitude(),
+		p1, err := geodistance.NewPoint(getRandomLatitude(), getRandomLongitude())
+		if err != nil {
+			b.Fatal(err)
 		}
-		p2 := geodistance.Point{
-			Longitude: getRandomLongitude(),
-			Latitude:  getRandomLatitude(),
+		p2, err := geodistance.NewPoint(getRandomLatitude(), getRandomLongitude())
+		if err != nil {
+			b.Fatal(err)
 		}
 		c.Calculate(p1, p2)
 	}
@@ -47,13 +47,13 @@ func BenchmarkGeographicLibCalculator(b *testing.B) {
 	c := geodistance.NewGeographicLibCalculator(logger)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		p1 := geodistance.Point{
-			Longitude: getRandomLongitude(),
-			Latitude:  getRandomLatitude(),
+		p1, err := geodistance.NewPoint(getRandomLatitude(), getRandomLongitude())
+		if err != nil {
+			b.Fatal(err)
 		}
-		p2 := geodistance.Point{
-			Longitude: getRandomLongitude(),
-			Latitude:  getRandomLatitude(),
+		p2, err := geodistance.NewPoint(getRandomLatitude(), getRandomLongitude())
+		if err != nil {
+			b.Fatal(err)
 		}
 		c.Calculate(p1, p2)
 	}
